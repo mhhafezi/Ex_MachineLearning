@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import learning_curve
 MSE_train = []
 MSE_test = []
 score_train = []
@@ -28,8 +29,8 @@ MSE_train.append(np.mean((y_train-h_train1)**2) / 2)
 MSE_test.append(np.mean((y_test-h_test1)**2) / 2)
 
 print('For degree 1:')
-print("TRAIN's MSE = \t", lr_model.score(x_train, y_train))
-print("TEST's MSE = \t", lr_model.score(x_test, y_test))
+print("TRAIN's Score = \t", lr_model.score(x_train, y_train))
+print("TEST's Score = \t", lr_model.score(x_test, y_test))
 
 score_train.append(lr_model.score(x_train, y_train))
 score_test.append(lr_model.score(x_test, y_test))
@@ -38,10 +39,13 @@ score_test.append(lr_model.score(x_test, y_test))
 x_line = np.arange(0, 20, 0.1).reshape(-1, 1)
 y_line = lr_model.predict(x_line)
 
-plt.plot(x_line[:, 0], y_line, 'r--')
+
+
+plt.plot(x_line[:, 0], y_line, 'r--', label='Degree 1')
 plt.plot(x_train,  y_train, 'bo')
 plt.plot(x_test,  y_test, 'co')
-plt.show()
+
+
 
 #degree=2
 x = np.random.rand(200, 1) * 20
@@ -61,8 +65,8 @@ lr_model.fit(x_train,y_train)
 h_train2 = lr_model.predict(x_train)
 h_test2 = lr_model.predict(x_test)
 print('For degree 2:')
-print("TRAIN's MSE = \t", lr_model.score(x_train, y_train))
-print("TEST's MSE = \t", lr_model.score(x_test, y_test))
+print("TRAIN's Score = \t", lr_model.score(x_train, y_train))
+print("TEST's Score = \t", lr_model.score(x_test, y_test))
 score_train.append(lr_model.score(x_train, y_train))
 score_test.append(lr_model.score(x_test, y_test))
 x_line = np.arange(0,20,0.1).reshape(-1,1)
@@ -70,10 +74,10 @@ x_line = np.hstack((x_line, x_line**2))
 y_line = lr_model.predict(x_line)
 MSE_train.append(np.mean((y_train-h_train2)**2) / 2)
 MSE_test.append(np.mean((y_test-h_test2)**2) / 2)
-plt.plot(x_line[:,0], y_line, 'r--')
+plt.plot(x_line[:,0], y_line, 'k--', label='Degree 2')
 plt.plot(x_train[:,0],  y_train, 'bo')
 plt.plot(x_test[:,0],  y_test, 'co')
-plt.show()
+
 #degree=4
 x = np.random.rand(200, 1) * 20
 y = 2*x**4 - x**3 + 3*x**2 - 5*x + 4
@@ -94,17 +98,17 @@ score_test.append(lr_model.score(x_test, y_test))
 h_train3 = lr_model.predict(x_train)
 h_test3 = lr_model.predict(x_test)
 print('For degree 4:')
-print("TRAIN's MSE = \t", lr_model.score(x_train, y_train))
-print("TEST's MSE = \t", lr_model.score(x_test, y_test))
+print("TRAIN's Score = \t", lr_model.score(x_train, y_train))
+print("TEST's Score = \t", lr_model.score(x_test, y_test))
 x_line = np.arange(0,20,0.1).reshape(-1,1)
 x_line = np.hstack((x_line, x_line**2, x_line**3, x_line**4))
 y_line = lr_model.predict(x_line)
 MSE_train.append(np.mean((y_train-h_train3)**2) / 2)
 MSE_test.append(np.mean((y_test-h_test3)**2) / 2)
-plt.plot(x_line[:,0], y_line, 'r--')
+plt.plot(x_line[:,0], y_line, 'g--', label='Degree 4')
 plt.plot(x_train[:,0],  y_train, 'bo')
 plt.plot(x_test[:,0],  y_test, 'co')
-plt.show()
+
 
 #degree=8
 x = np.random.rand(200, 1) * 20
@@ -126,18 +130,18 @@ h_test = lr_model.predict(x_test)
 MSE_train.append(np.mean((y_train-h_train)**2) / 2)
 MSE_test.append(np.mean((y_test-h_test)**2) / 2)
 print('For degree 8:')
-print("TRAIN's MSE = \t", lr_model.score(x_train, y_train))
-print("TEST's MSE = \t", lr_model.score(x_test, y_test))
+print("TRAIN's Score = \t", lr_model.score(x_train, y_train))
+print("TEST's Score = \t", lr_model.score(x_test, y_test))
 x_line = np.arange(0,20,0.1).reshape(-1,1)
 x_line = np.hstack((x_line, x_line**2, x_line**3, x_line**4, x_line**5, x_line**6, x_line**7, x_line**8))
 y_line = lr_model.predict(x_line)
 score_train.append(lr_model.score(x_train, y_train))
 score_test.append(lr_model.score(x_test, y_test))
 
-plt.plot(x_line[:,0], y_line, 'r--')
+plt.plot(x_line[:,0], y_line, 'm--', label='Degree 8')
 plt.plot(x_train[:,0],  y_train, 'bo')
 plt.plot(x_test[:,0],  y_test, 'co')
-plt.show()
+
 
 
 #degree=16
@@ -157,8 +161,8 @@ y_test = y[split:]
 lr_model.fit(x_train,y_train)
 
 print('For degree 16:')
-print("TRAIN's MSE = \t", lr_model.score(x_train, y_train))
-print("TEST's MSE = \t", lr_model.score(x_test, y_test))
+print("TRAIN's Score = \t", lr_model.score(x_train, y_train))
+print("TEST's Score = \t", lr_model.score(x_test, y_test))
 x_line = np.arange(0,20,0.1).reshape(-1,1)
 x_line = np.hstack((x_line, x_line**2, x_line**3, x_line**4, x_line**5, x_line**6, x_line**7, x_line**8, x_line**9,
                     x_line**10, x_line**11, x_line**12, x_line**13, x_line**14, x_line**15, x_line**16))
@@ -169,20 +173,34 @@ MSE_train.append(np.mean((y_train-h_train4)**2) / 2)
 MSE_test.append(np.mean((y_test-h_test4)**2) / 2)
 score_train.append(lr_model.score(x_train, y_train))
 score_test.append(lr_model.score(x_test, y_test))
-plt.plot(x_line[:,0], y_line, 'r--')
+plt.plot(x_line[:,0], y_line, 'y--', label='Degree 16')
 plt.plot(x_train[:,0],  y_train, 'bo')
 plt.plot(x_test[:,0],  y_test, 'co')
-plt.show()
-
-deg = [1, 2, 4, 8, 16]
-plt.plot(deg, MSE_train, 'go-', label='MSE_train')
-plt.plot(deg, MSE_test, 'ro-', label='MSE_TEST')
 plt.legend()
 plt.show()
 
+deg = [1, 2, 4, 8, 16]
+plt.plot(deg, MSE_train, 'go-', label='MSE_Train')
+plt.plot(deg, MSE_test, 'ro-', label='MSE_Test')
+plt.title('MSE for Different Degrees')
+plt.xlabel('Degree')
+plt.ylabel('MSE')
+plt.legend()
+plt.show()
+
+plt.plot(deg, score_train, 'go-', label='score_Train')
+plt.plot(deg, score_test, 'ro-', label='score_Test')
+plt.title('Score for Different Degrees')
+plt.xlabel('Degree')
+plt.ylabel('Score')
+plt.legend()
+plt.show()
+
+##Learning_Curve
 
 
-plt.plot(deg, score_train, 'go-', label='score_train')
-plt.plot(deg, score_test, 'ro-', label='score_TEST')
+train_sizes, test_score, train_score = learning_curve(lr_model, x_train[0:160, 1:2], y_train, cv=5)
+plt.plot(train_sizes, test_score.mean(axis=1), label='Validation')
+plt.plot(train_sizes, train_score.mean(axis=1), label='Train')
 plt.legend()
 plt.show()
